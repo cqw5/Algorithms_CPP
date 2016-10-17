@@ -14,13 +14,13 @@ class Graph {
 public:
     Graph(int num_v);
     void addEdge(int v, int w);
-    void dfs(int v, bool marked[]);	// 深度优先
-    Graph getReverse();				// 获取图的反向图
+    void dfs(int v, bool marked[]);         // 深度优先
+    Graph getReverse();                     // 获取图的反向图
     void getReversePost(Graph &G, int v, bool marked[], stack<int> &reverse_post_stack); // 获取图的逆后序排列
-    void printStronglyConnectedComponent();	// 输出图的强连通子图
+    void printStronglyConnectedComponent(); // 输出图的强连通子图
 private:
-    int num_v_;			// 图的结点数
-    vector<int> *adj_;	// 图的邻接数组
+    int num_v_;        // 图的结点数
+    vector<int> *adj_; // 图的邻接数组
 };
 
 Graph::Graph(int num_v) {
@@ -68,7 +68,7 @@ void Graph::printStronglyConnectedComponent() {
     for (int i = 0; i < num_v_; i++) {
         marked[i] = false;
     }
-	// 获取图G的反向图reverse_G
+    // 获取图G的反向图reverse_G
     Graph reverse_G = getReverse();
     // 后续出栈的顺序就是逆后序遍历的顺序
     stack<int> reverse_post_stack;
@@ -104,6 +104,6 @@ void testKosaraju() {
 }
 
 int main(){
-	testKosaraju();
-	return 0;
+    testKosaraju();
+    return 0;
 }
