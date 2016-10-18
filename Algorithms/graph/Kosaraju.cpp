@@ -34,7 +34,7 @@ void Graph::addEdge(int v, int w) {
 
 void Graph::dfs(int v, bool marked[]) {
     marked[v] = true;
-	cout << v << " ";
+    cout << v << " ";
     for (auto w = adj_[v].begin(); w != adj_[v].end(); ++w) {
         if (!marked[*w]) {
             dfs(*w, marked);
