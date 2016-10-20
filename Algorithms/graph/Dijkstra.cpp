@@ -20,75 +20,75 @@ using namespace std;
 // 加权有向边
 class DirectEdge {
 public:
-	DirectEdge() {}
-	DirectEdge(int v, int w, double weight) { v_ = v; w_ = w; weight_ = weight; }
-	int from() { return v_; }            // 返回指出这条边的结点
-	int to() { return w_; }              // 返回这条边指向的结点
-	double weight() { return weight_; }  // 返回边的权重
+    DirectEdge() {}
+    DirectEdge(int v, int w, double weight) { v_ = v; w_ = w; weight_ = weight; }
+    int from() { return v_; }            // 返回指出这条边的结点
+    int to() { return w_; }              // 返回这条边指向的结点
+    double weight() { return weight_; }  // 返回边的权重
 private:
-	int v_;          // 指出这条边的结点
-	int w_;          // 这条边指向的结点
-	double weight_;  // 边的权重
+    int v_;          // 指出这条边的结点
+    int w_;          // 这条边指向的结点
+    double weight_;  // 边的权重
 };
 
 // 加权有向图
 class EdgeWeightedDigraph {
 public:
-	EdgeWeightedDigraph(int num_v) {             // 构造函数
-		num_v_ = num_v;
-		adj_ = new vector<DirectEdge>[num_v_];
-	}
-	~EdgeWeightedDigraph() {                     // 析构函数
-		delete[]adj_;
-	}
-	void addEdge(int v, int w, double weight) {  // 增加有向边
-		adj_[v].push_back(DirectEdge(v, w, weight));
-	}
-	int V() const {                              // 返回图中顶点个数
-		return num_v_;
-	}
-	vector<DirectEdge> adj(int v) const {        // 返回顶点v的邻接数组
-		return adj_[v];
-	}
+    EdgeWeightedDigraph(int num_v) {             // 构造函数
+        num_v_ = num_v;
+        adj_ = new vector<DirectEdge>[num_v_];
+    }
+    ~EdgeWeightedDigraph() {                     // 析构函数
+        delete[]adj_;
+    }
+    void addEdge(int v, int w, double weight) {  // 增加有向边
+        adj_[v].push_back(DirectEdge(v, w, weight));
+    }
+    int V() const {                              // 返回图中顶点个数
+        return num_v_;
+    }
+    vector<DirectEdge> adj(int v) const {        // 返回顶点v的邻接数组
+        return adj_[v];
+    }
 private:
-	int num_v_;                                  // 图中顶点个数
-	vector<DirectEdge> *adj_;                    // 图的邻接数组
+    int num_v_;                                  // 图中顶点个数
+    vector<DirectEdge> *adj_;                    // 图的邻接数组
 };
 
 // 定义最小堆中存储的的结点
 class vectexInHeap {
 public:
-	vectexInHeap() {}
-	vectexInHeap(int v, double distTo) { v_ = v; distTo_ = distTo; }
-	int v() const { return v_; }
-	double distTo() const { return distTo_; }
-	void setDistTo(double distTo) { distTo_ = distTo; }
-	operator double() const { return distTo_; }
+    vectexInHeap() {}
+    vectexInHeap(int v, double distTo) { v_ = v; distTo_ = distTo; }
+    int v() const { return v_; }
+    double distTo() const { return distTo_; }
+    void setDistTo(double distTo) { distTo_ = distTo; }
+    operator double() const { return distTo_; }
 private:
-	int v_;           // 结点
-	double distTo_;   // 结点到起始结点的距离
+    int v_;           // 结点
+    double distTo_;   // 结点到起始结点的距离
 };
 
 // Dijstra算法寻找最短路径
 class DijstraShortPath {
 public:
-	DijstraShortPath(EdgeWeightedDigraph G, int s);
-	double distTo(int v);              // 从顶点s到v的距离
-	bool hasPathTo(int v);             // 是否存在从顶点s到v的路径
-	stack<DirectEdge> pathTo(int v);   // 从顶点s到v的路径
+    DijstraShortPath(EdgeWeightedDigraph G, int s);
+    double distTo(int v);              // 从顶点s到v的距离
+    bool hasPathTo(int v);             // 是否存在从顶点s到v的路径
+    stack<DirectEdge> pathTo(int v);   // 从顶点s到v的路径
 private:
-	void relax(EdgeWeightedDigraph G, int v);  // 放松结点v
-	vector<DirectEdge> edgeTo_;                // edgeTo[v]的值为s到v的最短路径上的最后一条边
-	vector<double> distTo_;                    // distTo[v]的值为s到v的已知的最短路径的长度
-	vector<vectexInHeap> minheap_;             // 小顶堆保存候选的待放松的结点
-	int s_;                                    // 起始结点
+    void relax(EdgeWeightedDigraph G, int v);  // 放松结点v
+    vector<DirectEdge> edgeTo_;                // edgeTo[v]的值为s到v的最短路径上的最后一条边
+    vector<double> distTo_;                    // distTo[v]的值为s到v的已知的最短路径的长度
+    vector<vectexInHeap> minheap_;             // 小顶堆保存候选的待放松的结点
+    int s_;                                    // 起始结点
 };
 
 /*
  * 自定义比较堆中元素大小的函数
  */ 
 bool greater_vectex(const vectexInHeap &v1, const vectexInHeap &v2) {
-	return v1 > v2;
+    return v1 > v2;
 }
 
 /*
@@ -98,25 +98,25 @@ bool greater_vectex(const vectexInHeap &v1, const vectexInHeap &v2) {
  *     s：起始顶点
  */
 DijstraShortPath::DijstraShortPath(EdgeWeightedDigraph G, int s) {
-	s_ = s;
-	int n = G.V();
-	// 初始化edgeTo
-	vector<DirectEdge> tmp_edgeTo(n);
-	edgeTo_ = tmp_edgeTo;
-	// 初始化distTo
-	vector<double> tmp_distTo(n, DBL_MAX);
-	tmp_distTo[0] = 0.0;
-	distTo_ = tmp_distTo;
-	// 创建小顶堆
-	make_heap(minheap_.begin(), minheap_.end(), greater_vectex);
-	// 将结点s放入小顶堆中
-	minheap_.push_back(vectexInHeap(s, 0.0)); push_heap(minheap_.begin(), minheap_.end(), greater_vectex);
-	while (!minheap_.empty()) {  // 小顶堆不为空执行循环
-		// 取出小顶堆堆顶的结点，进行放松
-		int vertex = minheap_.front().v();
-		pop_heap(minheap_.begin(), minheap_.end(), greater_vectex); minheap_.pop_back();
-		relax(G, vertex);
-	}
+    s_ = s;
+    int n = G.V();
+    // 初始化edgeTo
+    vector<DirectEdge> tmp_edgeTo(n);
+    edgeTo_ = tmp_edgeTo;
+    // 初始化distTo
+    vector<double> tmp_distTo(n, DBL_MAX);
+    tmp_distTo[0] = 0.0;
+    distTo_ = tmp_distTo;
+    // 创建小顶堆
+    make_heap(minheap_.begin(), minheap_.end(), greater_vectex);
+    // 将结点s放入小顶堆中
+    minheap_.push_back(vectexInHeap(s, 0.0)); push_heap(minheap_.begin(), minheap_.end(), greater_vectex);
+    while (!minheap_.empty()) {  // 小顶堆不为空执行循环
+        // 取出小顶堆堆顶的结点，进行放松
+        int vertex = minheap_.front().v();
+        pop_heap(minheap_.begin(), minheap_.end(), greater_vectex); minheap_.pop_back();
+        relax(G, vertex);
+    }
 }
 
 /*
@@ -126,43 +126,43 @@ DijstraShortPath::DijstraShortPath(EdgeWeightedDigraph G, int s) {
  *     v：待发送的顶点
  */
 void DijstraShortPath::relax(EdgeWeightedDigraph G, int v) {
-	for (DirectEdge e : G.adj(v)) {  //？？？【运行到这段代码是报bad:alloc，未解决】
-		int w = e.to();  // 从放松的结点指出的有向边指向的结点
-		if (distTo_[w] > distTo_[v] + e.weight()) {
-			double old_distTo_w = distTo_[w];
-			distTo_[w] = distTo_[v] + e.weight();
-			edgeTo_[w] = e;
-			auto exist_w = find(minheap_.begin(), minheap_.end(), vectexInHeap(w, old_distTo_w));
-			if (exist_w == minheap_.end()) { // 结点w不在堆中，将w入堆
-				minheap_.push_back(vectexInHeap(w, distTo_[w])); push_heap(minheap_.begin(), minheap_.end(), greater_vectex);
-			}
-			else { // 已经在堆中
-				(*exist_w).setDistTo(distTo_[w]);
-			}
-		}
-	}
+    for (DirectEdge e : G.adj(v)) {  //？？？【运行到这段代码是报bad:alloc，未解决】
+        int w = e.to();  // 从放松的结点指出的有向边指向的结点
+        if (distTo_[w] > distTo_[v] + e.weight()) {
+            double old_distTo_w = distTo_[w];
+            distTo_[w] = distTo_[v] + e.weight();
+            edgeTo_[w] = e;
+            auto exist_w = find(minheap_.begin(), minheap_.end(), vectexInHeap(w, old_distTo_w));
+            if (exist_w == minheap_.end()) { // 结点w不在堆中，将w入堆
+                minheap_.push_back(vectexInHeap(w, distTo_[w])); push_heap(minheap_.begin(), minheap_.end(), greater_vectex);
+            }
+            else { // 已经在堆中
+                (*exist_w).setDistTo(distTo_[w]);
+            }
+        }
+    }
 }
 
 double DijstraShortPath::distTo(int v) {
-	return distTo_[v];
+    return distTo_[v];
 }
 
 bool DijstraShortPath::hasPathTo(int v) {
-	return distTo_[v] != DBL_MAX;
+    return distTo_[v] != DBL_MAX;
 }
 
 stack<DirectEdge> DijstraShortPath::pathTo(int v) {
-	stack<DirectEdge> path;
-	DirectEdge e = edgeTo_[v];
-	for (; e.from() != s_; e = edgeTo_[e.from()]) {
-		path.push(e);
-	}
-	path.push(e);
-	return path;
+    stack<DirectEdge> path;
+    DirectEdge e = edgeTo_[v];
+    for (; e.from() != s_; e = edgeTo_[e.from()]) {
+        path.push(e);
+    }
+    path.push(e);
+    return path;
 }
 
 void testDijstraShortPath() {
-	EdgeWeightedDigraph G(8);
+    EdgeWeightedDigraph G(8);
     G.addEdge(4, 5, 0.35);
     G.addEdge(5, 4, 0.35);
     G.addEdge(4, 7, 0.37);
@@ -183,15 +183,15 @@ void testDijstraShortPath() {
     cout << SP.distTo(6) << endl;
     stack<DirectEdge> stack_edge = SP.pathTo(6);
     while(!stack_edge.empty()) {
-    	DirectEdge e = stack_edge.top();
-    	stack_edge.pop();
-    	cout << e.from() << " ";
+        DirectEdge e = stack_edge.top();
+        stack_edge.pop();
+        cout << e.from() << " ";
     }
     cout << 6 << endl;
 }
 
 int main(){
-	testDijstraShortPath();
-	return 0;
+    testDijstraShortPath();
+    return 0;
 }
 
