@@ -8,12 +8,16 @@
 #include <iostream>
 #include <vector>
 #include "bubbleSort.h"
+#include "SelectionSort.h"
+#include "insertSort.h"
 
 #define random(x) (rand() % x)
 
 using namespace std;
 
-
+/*
+ * 产生num个范围在[0, range)内的数，将数保存为一个vector返回
+ */
 vector<int> genData(const int num, const int range){
 	vector<int> a;
 	for (int i = 0; i < num; i++){
@@ -40,18 +44,54 @@ void printTime(void(*sort)(vector<int>&, int), string name, vector<int> a){
 }
 
 /*
+ * 比较排序算法的执行时间
  * Parament:
  *     n: 排序元素的个数
  *     range：排序元素的范围
  */ 
-void testSort(int n, int range){
+void compareByTime(int n, int range){
 	cout << "Element number: " << n << ", range:[0," << range << "): " << endl; 
 	vector<int> a = genData(n, range);
 	printTime(BubbleSort<int>::bubbleSort, "BubbleSort", a);                    // 冒泡(标准版)
-	printTime(BubbleSort<int>::bubbleSortEarlyStop, "bubbleSortEarlyStop", a);  // 冒泡(提取终止版)
+	printTime(BubbleSort<int>::bubbleSortEarlyStop, "BubbleSortEarlyStop", a);  // 冒泡(提取终止版)
+	printTime(SelectionSort<int>::selectionSort, "SelectionSort", a);           // 选择排序
+	printTime(InsertSort<int>::insertSort, "InsertSort", a);                    // 插入排序
+}
+
+
+/*
+ * 打印排序完的结果
+ */
+void printSorted(void(*sort)(vector<int>&, int), string name, vector<int> a){
+	sort(a, a.size());
+	cout << name << ": ";
+	for (int elem: a){
+		cout << elem << " ";
+	}
+	cout << endl;
+}
+
+/*
+ * 测试排序算法的正确性
+ */
+void testSort(int n, int range){
+	vector<int> a = genData(n, range);
+	cout << "Original Array: ";
+	for (int elem: a){
+		cout << elem << " ";
+	}
+	cout << endl;
+	printSorted(BubbleSort<int>::bubbleSort, "BubbleSort", a);                    // 冒泡(标准版)
+	printSorted(BubbleSort<int>::bubbleSortEarlyStop, "bubbleSortEarlyStop", a);  // 冒泡(提取终止版)
+	printSorted(SelectionSort<int>::selectionSort, "SelectionSort", a);           // 选择排序
+	printSorted(InsertSort<int>::insertSort, "InsertSort", a);                    // 插入排序
 }
 
 int main(){
-	testSort(10000, 100000);
+	cout << "---------- testSort ----------" << endl;
+	testSort(10, 100);
+	cout << endl;
+	cout << "------- compareByTime --------" << endl;
+	compareByTime(10000, 100000);
 	return 0;
 }
