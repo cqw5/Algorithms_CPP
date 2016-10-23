@@ -8,8 +8,11 @@
 #include <iostream>
 #include <vector>
 #include "bubbleSort.h"
-#include "SelectionSort.h"
+#include "selectionSort.h"
 #include "insertSort.h"
+#include "shellSort.h"
+#include "mergeSortRecursion.h"
+#include "mergeSortIteration.h"
 
 #define random(x) (rand() % x)
 
@@ -56,6 +59,9 @@ void compareByTime(int n, int range){
 	printTime(BubbleSort<int>::bubbleSortEarlyStop, "BubbleSortEarlyStop", a);  // 冒泡(提取终止版)
 	printTime(SelectionSort<int>::selectionSort, "SelectionSort", a);           // 选择排序
 	printTime(InsertSort<int>::insertSort, "InsertSort", a);                    // 插入排序
+	printTime(ShellSort<int>::shellSort, "ShellSort", a);                       // 希尔排序
+	printTime(MergeSortRecursion<int>::mergeSort, "MergeSortRecursion", a);     // 归并排序(递归)
+	printTime(MergeSortIteration<int>::mergeSort, "MergeSortIteration", a);     // 归并排序(迭代)
 }
 
 
@@ -85,6 +91,9 @@ void testSort(int n, int range){
 	printSorted(BubbleSort<int>::bubbleSortEarlyStop, "bubbleSortEarlyStop", a);  // 冒泡(提取终止版)
 	printSorted(SelectionSort<int>::selectionSort, "SelectionSort", a);           // 选择排序
 	printSorted(InsertSort<int>::insertSort, "InsertSort", a);                    // 插入排序
+	printSorted(ShellSort<int>::shellSort, "ShellSort", a);                       // 希尔排序
+	printSorted(MergeSortRecursion<int>::mergeSort, "MergeSortRecursion", a);     // 归并排序(递归)
+	printSorted(MergeSortIteration<int>::mergeSort, "MergeSortIteration", a);     // 归并排序(迭代)
 }
 
 int main(){
