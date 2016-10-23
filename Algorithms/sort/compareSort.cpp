@@ -13,6 +13,7 @@
 #include "shellSort.h"
 #include "mergeSortRecursion.h"
 #include "mergeSortIteration.h"
+#include "quickSort.h"
 
 #define random(x) (rand() % x)
 
@@ -62,6 +63,7 @@ void compareByTime(int n, int range){
 	printTime(ShellSort<int>::shellSort, "ShellSort", a);                       // 希尔排序
 	printTime(MergeSortRecursion<int>::mergeSort, "MergeSortRecursion", a);     // 归并排序(递归)
 	printTime(MergeSortIteration<int>::mergeSort, "MergeSortIteration", a);     // 归并排序(迭代)
+	printTime(QuickSort<int>::quickSort, "QuickSort", a);                       // 快速排序
 }
 
 
@@ -94,6 +96,7 @@ void testSort(int n, int range){
 	printSorted(ShellSort<int>::shellSort, "ShellSort", a);                       // 希尔排序
 	printSorted(MergeSortRecursion<int>::mergeSort, "MergeSortRecursion", a);     // 归并排序(递归)
 	printSorted(MergeSortIteration<int>::mergeSort, "MergeSortIteration", a);     // 归并排序(迭代)
+	printSorted(QuickSort<int>::quickSort, "QuickSort", a);                       // 快速排序
 }
 
 int main(){
