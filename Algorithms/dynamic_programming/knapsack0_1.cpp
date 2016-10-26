@@ -68,9 +68,10 @@ public:
      */
     static int knapsack_iterator(vector<Item> item, int numberOfItem, int numberOfCapacity, vector<int> &x){
         vector<vector<int>> fArray(numberOfItem + 1, vector<int>(numberOfCapacity + 1, 0));  // 保存状态数组
+        // 构建状态数组
         // 初始化最后一个物品的状态fArray[numberOfItem]，根据递归公式
         int yMax = min(item[numberOfItem].weight - 1, numberOfCapacity);
-        // // f(n, k) = 0,  k < w_n 
+        // f(n, k) = 0,  k < w_n 
         for (int i = 1; i < yMax; i++){
             fArray[numberOfItem][i] = 0;
         }
