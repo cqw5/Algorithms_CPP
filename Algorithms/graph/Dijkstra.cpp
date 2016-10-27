@@ -1,4 +1,5 @@
-/*！
+/*！Author: qwchen
+ *! Date: 2016-10-27
  * 加权有向图(权重非负)的最短路径：Dijkstra算法
  * 思想：构造edgeTo[v](s到v的最短路径上的最后一条边) 和 distTo[v](s到v的已知的最短路径的长度)，
  *       之后判断是否有最短路径、最短路径长度、最短路径，都可以从edgeTo[]和distTo[]得出
@@ -7,6 +8,7 @@
  *           若是，修改distTo[w]和edgeTo[w]，并将w放入堆中
  *           若不是，不进行操作
  *       直到小顶堆为空时，结束
+ * Dijkstra是一种贪心算法，一般情况下时间复杂度O(ElogV)，最坏情况下时间复杂度也是O(ElogV)
  */
 
 #include <iostream>
@@ -71,13 +73,14 @@ private:
 
 // Dijstra算法寻找最短路径
 class DijstraShortPath {
+// 调bug启示，第一次写时，DijstraShortPath和relax函数的EdgeWeightedDigraph &G没有加上应用，一直出错。
 public:
-    DijstraShortPath(EdgeWeightedDigraph G, int s);
+    DijstraShortPath(EdgeWeightedDigraph &G, int s);
     double distTo(int v);              // 从顶点s到v的距离
     bool hasPathTo(int v);             // 是否存在从顶点s到v的路径
     stack<DirectEdge> pathTo(int v);   // 从顶点s到v的路径
 private:
-    void relax(EdgeWeightedDigraph G, int v);  // 放松结点v
+    void relax(EdgeWeightedDigraph &G, int v);  // 放松结点v
     vector<DirectEdge> edgeTo_;                // edgeTo[v]的值为s到v的最短路径上的最后一条边
     vector<double> distTo_;                    // distTo[v]的值为s到v的已知的最短路径的长度
     vector<vectexInHeap> minheap_;             // 小顶堆保存候选的待放松的结点
@@ -97,7 +100,7 @@ bool greater_vectex(const vectexInHeap &v1, const vectexInHeap &v2) {
  *     G: 加权有向图
  *     s：起始顶点
  */
-DijstraShortPath::DijstraShortPath(EdgeWeightedDigraph G, int s) {
+DijstraShortPath::DijstraShortPath(EdgeWeightedDigraph &G, int s) {
     s_ = s;
     int n = G.V();
     // 初始化edgeTo
@@ -125,8 +128,8 @@ DijstraShortPath::DijstraShortPath(EdgeWeightedDigraph G, int s) {
  *     G：加权有向图
  *     v：待发送的顶点
  */
-void DijstraShortPath::relax(EdgeWeightedDigraph G, int v) {
-    for (DirectEdge e : G.adj(v)) {  //？？？【运行到这段代码是报bad:alloc，未解决】
+void DijstraShortPath::relax(EdgeWeightedDigraph &G, int v) {
+    for (DirectEdge e : G.adj(v)) {
         int w = e.to();  // 从放松的结点指出的有向边指向的结点
         if (distTo_[w] > distTo_[v] + e.weight()) {
             double old_distTo_w = distTo_[w];
@@ -187,7 +190,6 @@ void testDijstraShortPath() {
         stack_edge.pop();
         cout << e.from() << " ";
     }
-    cout << 6 << endl;
 }
 
 int main(){
