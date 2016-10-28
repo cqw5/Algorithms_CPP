@@ -4,13 +4,13 @@
  */
 
 #include <iostream>
-#include "chain.h"
+#include "chainList.h"
 
 using namespace std;
 
-void testChain() {
-    chain<double> *x = new chain<double>();
-    chain<int> y, z;
+void testChainList() {
+    chainList<double> *x = new chainList<double>();
+    chainList<int> y, z;
 
     // test size
     cout << "Initial size of x, y, and z = "
@@ -80,7 +80,7 @@ void testChain() {
     }
 
     // test copy constructor
-    chain<int> w(y);
+    chainList<int> w(y);
     y.erase(0);
     y.erase(0);
     cout << "w should be old y, new y has first 2 elements removed" << endl;
@@ -90,6 +90,6 @@ void testChain() {
 }
 
 int main(){
-    testChain();
+    testChainList();
     return 0;
 }

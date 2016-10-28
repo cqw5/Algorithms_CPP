@@ -3,8 +3,8 @@
  * 线性表的链表描述
  */
 
-#ifndef chain_
-#define chain_
+#ifndef chainList_
+#define chainList_
 
 #include <iostream>
 #include <sstream>
@@ -31,11 +31,11 @@ struct chainNode {
 
 // 链表
 template <class T>
-class chain : public linearList<T> {
+class chainList : public linearList<T> {
 public:
-    chain();                  // 构造函数
-    chain(const chain<T> &);  // 拷贝构造函数
-    ~chain();                 // 析构函数
+    chainList();                  // 构造函数
+    chainList(const chainList<T> &);  // 拷贝构造函数
+    ~chainList();                 // 析构函数
 
     bool empty() const;                     // 返回当链表为空时，返回true
     int size() const;                       // 返回链表元素的个数
@@ -52,20 +52,20 @@ private:
 };
 
 template <class T>
-chain<T>::chain() {
+chainList<T>::chainList() {
     firstNode = NULL;
     m_iSize = 0;
 }
 
 template <class T>
-chain<T>::chain(const chain<T> &theList) {
+chainList<T>::chainList(const chainList<T> &theList) {
     m_iSize = theList.m_iSize;
     if (m_iSize == 0) { //考虑边界值，当原来的链表为空
         firstNode = NULL;
         return;
     }
     // 链表的拷贝：
-    // theList.firstNode指向源链表，firstNode指向目的链表
+    // theList.firstNode指向源链表首节点，firstNode指向目的链表首节点
     // sourceNode指向源链表的当前元素，targetNode指向目的链表的当前元素
     chainNode<T> *sourceNode = theList.firstNode;
     firstNode = new chainNode<T>(sourceNode->element);
@@ -80,7 +80,7 @@ chain<T>::chain(const chain<T> &theList) {
 }
 
 template <class T>
-chain<T>::~chain() {
+chainList<T>::~chainList() {
     while (firstNode != NULL) {
         // chainNode<T> *nextNode = firstNode;  这种写法就错，导致内存泄露
         chainNode<T> *nextNode = firstNode->next;
@@ -90,22 +90,22 @@ chain<T>::~chain() {
 }
 
 template <class T>
-bool chain<T>::empty() const{ 
+bool chainList<T>::empty() const{ 
     return m_iSize == 0; 
 }
 
 template <class T>
-int chain<T>::size() const { 
+int chainList<T>::size() const { 
     return m_iSize;  
 }
 
 template <class T>
-int chain<T>::capacity() const { 
+int chainList<T>::capacity() const { 
     return m_iSize; 
 }
 
 template <class T>
-T& chain<T>::get(int theIndex) const {
+T& chainList<T>::get(int theIndex) const {
     if (theIndex < 0 || theIndex >= m_iSize) {
         stringstream s;
         s << "index = " << theIndex << " size = " << m_iSize << endl;
@@ -119,7 +119,7 @@ T& chain<T>::get(int theIndex) const {
 }
 
 template <class T>
-int chain<T>::indexOf(const T &theElement) const {
+int chainList<T>::indexOf(const T &theElement) const {
     chainNode<T> *currentNode = firstNode;
     int index = 0;
     while (currentNode != NULL && currentNode->element != theElement) {
@@ -131,7 +131,7 @@ int chain<T>::indexOf(const T &theElement) const {
 }
 
 template <class T>
-void chain<T>::erase(int theIndex) {
+void chainList<T>::erase(int theIndex) {
     if (theIndex < 0 || theIndex >= m_iSize) {
         stringstream s;
         s << "index = " << theIndex << " size = " << m_iSize << endl;
@@ -155,7 +155,7 @@ void chain<T>::erase(int theIndex) {
 }
 
 template <class T>
-void chain<T>::insert(int theIndex, const T &theElement) {
+void chainList<T>::insert(int theIndex, const T &theElement) {
     if (theIndex < 0 || theIndex > m_iSize) {
         stringstream s;
         s << "index = " << theIndex << " size = " << m_iSize;
@@ -178,16 +178,16 @@ void chain<T>::insert(int theIndex, const T &theElement) {
 }
 
 template <class T>
-void chain<T>::output(ostream &out) const {
+void chainList<T>::output(ostream &out) const {
     for (chainNode<T> *currentNode = firstNode; currentNode != NULL; currentNode = currentNode->next) {
         out << currentNode->element << " ";
     }
 }
 
 template <class T>
-ostream& operator<<(ostream& out, const chain<T> &x) {
+ostream& operator<<(ostream& out, const chainList<T> &x) {
     x.output(out);
     return out;
 }
 
-#endif // !chain_
+#endif // !chainList_
