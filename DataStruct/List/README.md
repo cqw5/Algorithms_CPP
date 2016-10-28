@@ -16,7 +16,7 @@
 
   因此，大多数的应用设计在选择线性表的描述方法时，空间复杂度上的差异并不是决定性因素
 
-- 时间复杂度：
+- 时间复杂度：<br />
   操作|数组实现|链表实现
 :---:|:---:|:---:
 get|O(1)|O(n)
@@ -36,10 +36,10 @@ erase|O(n)|O(n)
 - list：相当于链表实现的线性表
 
 ### 代码实现
-[线性表的抽象数据类型](./linearList.h)
-[数组描述的线性表](./arrayList.h)
-[链表描述的线性表](./chainList.h)
-[带头结点的双向循环链表](./circularListWithHeader.h)
+[线性表的抽象数据类型](./linearList.h)<br />
+[数组描述的线性表](./arrayList.h)<br />
+[链表描述的线性表](./chainList.h)<br />
+[带头结点的双向循环链表](./circularListWithHeader.h)<br />
 
 
 
