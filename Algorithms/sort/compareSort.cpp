@@ -1,4 +1,5 @@
-/*!
+/*! Author: qwchen
+ *! Date: 2016-10-23
  * 测试和比较各种排序算 
  */
 
@@ -16,6 +17,7 @@
 #include "quickSort.h"
 #include "quickSort3Way.h"
 #include "heapSort.h"
+#include "binSort.h"
 
 #define random(x) (rand() % x)
 
@@ -44,7 +46,17 @@ void printTime(void(*sort)(vector<int>&, int), string name, vector<int> a){
     int duration;                    // 程序执行时间，单位毫秒ms
     start_time = clock();
     sort(a, a.size());
-    end_time = clock();
+    end_time = clock(); 
+    duration = end_time - start_time;
+    cout << name << ": " << duration << "ms" << endl;
+}
+
+void printTimeBin(void(*sort)(vector<int>&, int, int, int), string name, vector<int> a, int range){
+    clock_t start_time, end_time;    // 时间，单位毫秒ms
+    int duration;                    // 程序执行时间，单位毫秒ms
+    start_time = clock();
+    sort(a, a.size(), 0, range);
+    end_time = clock(); 
     duration = end_time - start_time;
     cout << name << ": " << duration << "ms" << endl;
 }
@@ -68,6 +80,7 @@ void compareByTime(int n, int range){
     printTime(QuickSort<int>::quickSort, "QuickSort", a);                       // 快速排序
     printTime(QuickSort3Way<int>::quickSort, "QuickSort3Way", a);               // 三向切分快速排序
     printTime(HeapSort<int>::heapSort, "HeapSort", a);                          // 堆排序
+    printTimeBin(BinSort<int>::binSort, "BinSort", a, range);                   // 箱子排序
 }
 
 
