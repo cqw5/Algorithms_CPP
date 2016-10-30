@@ -108,8 +108,7 @@ void testMazeMouse() {
     const int numberOfRow = 10;
     const int numberOfCol = 10;
     // 10*10的迷宫矩阵，0和11是外围多了一圈障碍物，简化算法
-    vector<vector<bool>> maze = {
-    // bool maze[numberOfRow+2][numberOfCol+2] = {    
+    vector<vector<bool>> maze = {   
         { 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1 },
         { 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1 },
