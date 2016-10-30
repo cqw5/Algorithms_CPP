@@ -18,7 +18,7 @@
  - [链表实现的队列](./linkedQueue.h)
 
 ###队列的应用
- - [列出车厢从排列](../../Algorithms/queue/railroadReSort.cpp)
+ - [列车车厢重排列](../../Algorithms/queue/railroadReSort.cpp)
  - [寻找迷宫中两点的最短路径](../../Algorithms/queue/findShortPath.cpp)
 
 
