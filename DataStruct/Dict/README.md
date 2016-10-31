@@ -24,9 +24,6 @@
 令U_n和S_n分别表示在一次成功搜索和不成功搜索中的平均搜索的桶数。则：<br />
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://www.forkosh.com/mathtex.cgi? \Large U_{n} \approx \frac{1}{2}(1+\frac{1}{(1-a)^2})"><br />
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://www.forkosh.com/mathtex.cgi? \Large S_{n} \approx \frac{1}{2}(1+\frac{1}{1-a})">  
-$$ U_{n} \approx \frac{1}{2}(1+\frac{1}{(1-a)^2}) $$  
-$$S_{n} \approx \frac{1}{2}(1+\frac{1}{1-a})$$  
-<img src="http://chart.googleapis.com/chart?cht=tx&chl=\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" style="border:none;">
 其中a = n/b为负载因子。  
 当a=0.5时，一次不成功的搜索将平均查找2.5个桶，一次成功的搜索将平均查找1.5个桶；当a=0.9时，这些数字分别为50.5和5.5。当然这假定n>>51。<br >
 当负载因子a比较小时，哈希表的平均性能比线性表的平均性能要好得多。  
