@@ -1,9 +1,10 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 ###1 字典描述
 
- - 有序数组描述
- - 有序链表描述
- - 哈希表描述
+ - 有序数组描述（有序）
+ - 有序链表描述（有序）
+ - 哈希表描述（无序）
+ - 搜索树描述（有序）：见数据结构Tree
 
 ###2 字典的哈希表描述    
 ####2.1 哈希函数
