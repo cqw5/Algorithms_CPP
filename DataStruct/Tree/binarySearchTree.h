@@ -39,10 +39,13 @@ public:
     binarySearchTree();
     ~binarySearchTree();
     int size() const;
-    pair<const K, E>* find(const K &theKey) const; // 查找结点
-    void insert(const pair<const K, E> &thePair);  // 插入结点
-    void erase(const K &theKey);                   // 删除结点
+    pair<const K, E>* find(const K& theKey) const; // 查找结点
+    pair<const K, E>* findLE(const K& theKey) const; // 查找小于等于theKey的最大元素
+    pair<const K, E>* findGE(const K& theKey) const; // 查找大于等于theKey的最小元素
+    void insert(const pair<const K, E>& thePair);  // 插入结点
+    void erase(const K& theKey);                   // 删除结点
     void ascend();                                 // 升序输出结点
+
 private:
     binaryTreeNode<pair<const K, E>> *root; // 树的根节点
     int treeSize;                           // 树的节点个数
@@ -94,6 +97,39 @@ pair<const K, E>* binarySearchTree<K, E>::find(const K &theKey) const {
         else return &p->element;                               // theKey = 根的关键字
     }
     return NULL;
+}
+
+template <class K, class E>
+pair<const K, E>* binarySearchTree<K, E>::findLE(const K& theKey) const {
+    binaryTreeNode<pair<const K, E>> *p = root;
+    pair<const K, E> *bestElement = NULL; // 目前查找到的元素，其关键字是小于等于theKey的最大元素
+    while(p != NULL){
+        // p->element是一个候选者吗？
+        if (p->element.first <= theKey){
+            // 是，p->element是比bestElement更好的候选者
+            bestElement = &p->element;
+            p = p->rightChild;
+        } else {
+            // 不是，p->element.first太大
+            p = p->leftChild;
+        }
+    }
+    return bestElement;
+}
+
+template <class K, class E>
+pair<const K, E>* binarySearchTree<K, E>::findGE(const K& theKey) const {
+    binaryTreeNode<pair<const K, E>> *p = root;
+    pair<const K, E> *bestElement = NULL;
+    while(p != NULL){
+        if (p->element.first >= theKey){
+            bestElement = &p->element;
+            p = p->leftChild;
+        } else {
+            p = p->rightChild;
+        }
+    }
+    return bestElement;
 }
 
 template <class K, class E>

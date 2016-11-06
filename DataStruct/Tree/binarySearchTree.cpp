@@ -21,7 +21,13 @@ void testBinarySearchTree()
     
     pair<const int, char> *s = y.find(4);
     cout << "Search for 4 succeeds " << endl;
-    cout << s->first << ' ' << s->second << endl;
+    cout << s->first << " " << s->second << endl;
+    s = y.findLE(5);
+    cout << "Search for <= 5 succeeds " << endl;
+    cout << s->first << " " << s->second << endl;
+    s = y.findGE(5);
+    cout << "Search for >= 5 succeeds " << endl;
+    cout << s->first << " " << s->second << endl;
     y.erase(4);
     cout << "4 deleted " << endl;
     cout << "Tree size is " << y.size() << endl;
