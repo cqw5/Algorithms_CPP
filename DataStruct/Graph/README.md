@@ -1,4 +1,4 @@
-### 图的表示
+### 1 图的表示
 典型图表示的性能复杂度  
 
 |数据结构|所需空间|添加一条边v-w|检测w和v是否相邻|遍历v的所有相邻顶点|
@@ -11,7 +11,7 @@
 - 下面所有的数据结构都是使用邻接数组来表示图。
 
 
-### 无向图
+### 2 无向图
 1. [邻接数组表示的无向图](./Graph.h)
 2. 无向图的应用
  - [单点连通性](../../Algorithms/graph/DepthFirstSearch.cpp) （深度优先搜索）
@@ -22,13 +22,22 @@
  - [双色问题（二分图）](../../Algorithms/graph/TwoColor.cpp) （深度优先搜索）
  - 符号图：符号图只需要在普通的图的基础上加上两个字典，分别是“顶点id到顶点名的映射”和“顶点名到顶点id的映射”  
 
-### 有向图
+### 3 有向图
+1. [邻接数组表示的有向图](./Digraph.h)
+2. 有向图的应用
+ - 单点和多点的可达性（与无向图的[单点连通性](../../Algorithms/graph/DepthFirstSearch.cpp)问题相似，参考该问题）  
+ - 单点有向路径（与无向图的[单点路径](../../Algorithms/graph/DepthFirstPaths.cpp)问题相似，参考该问题）  
+ - 单点最短路径（与无向图的[单点最短路径](../../Algorithms/graph/BreadthFirstPaths.cpp)问题相似，参考该问题）
+ - [有向环检测](../../Algorithms/graph/DirectedCycle.cpp) (深度优先搜索)
+ - [深度优先的顶点排序](../../Algorithms/graph/DepthFirstOrder.cpp) （深度优先搜索）
+ - [优先级限制下的调度问题（及 拓扑排序）](../../Algorithms/graph/TopologicalOrder.cpp) （贪心算法）
+ - [强连通性 Kosaraju算法](../../Algorithms/graph/Kosaraju.cpp) （深度优先搜索）
 
 
-### 加权无向图
+### 4 加权无向图
 
 
-### 加权有向图
+### 5 加权有向图
 
 
 

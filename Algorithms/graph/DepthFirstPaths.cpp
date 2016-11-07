@@ -47,7 +47,7 @@ bool DepthFirstPaths::hashPathTo(int v){
 }
 
 vector<int> DepthFirstPaths::pathTo(int v){
-	// 通过stack反向存储路径，出栈就是正向路径
+    // 通过stack反向存储路径，出栈就是正向路径
     vector<int> path;
     stack<int> pathReverse;
     for (int t = v; t != s_; t = edgeTo_[t]){
