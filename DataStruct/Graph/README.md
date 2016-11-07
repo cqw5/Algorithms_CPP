@@ -37,12 +37,15 @@
 ### 4 加权无向图
 1. [邻接数组表示的加权有向图](./EdgeWeightedGraph.h)
 2. 加权无向图的应用
- - [最小生成树（Prim算法）](../../Algorithms/graph/PrimMST.cpp)
- - [最小生成树（Kruskal算法）](../../Algorithms/graph/KruskalMST.cpp)
+ - [最小生成树（Prim算法）](../../Algorithms/graph/PrimMST.cpp) 时间复杂度O(ElogE)，空间复杂度O(V)
+ - [最小生成树（Kruskal算法）](../../Algorithms/graph/KruskalMST.cpp) 时间复杂度O(ElogE)，空间复杂度O(E)
 Prim算法和Kruskal算法不能应用于加权有向图，不可能。加权有向图的最小生成树是一个叫做最小树形图的问题。
 
 ### 5 加权有向图
-
+1. [邻接数组表示的加权有向图](./EdgeWeightedDigraph.h)
+2. 加权有向图的应用
+ - [最短路径（Dijkstra算法）](../../Algorithms/graph/Dijkstra.cpp)
+ - [最短路径（Bellman-Ford算法）](../../Algorithms/graph/Bellman_Ford.cpp)
 
 
 
