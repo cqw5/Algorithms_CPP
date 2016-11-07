@@ -1,4 +1,5 @@
-/*！
+/*! Author：qwchen
+ *! Date  : 2016-11-7
  * 加权无向图的最小生成树：Kruskal算法
  * 思路：使用贪心的方法。将图的所有边放入小顶堆中，不断选择一条成本最小且不会产生环路的边加入生成树中，直到树中含有V-1条边为止
  * 方法：用数组mst存放生成树的边
@@ -8,86 +9,31 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <queue>
 #include "../search/unionFind.h"
+#include "../../DataStruct/Graph/EdgeWeightedGraph.h"
 
 using namespace std;
 
-// 加权无向边的类
-class edge{
+class KruskalMST {
 public:
-    edge(){}
-    edge(int v, int w, double weight){ v_ = v; w_ = w; weight_ = weight; }
-    int v() const { return v_; }
-    int w() const { return w_; }
-    double weight() const { return weight_; }
-    operator double() const { return weight_; }
+    KruskalMST(EdgeWeightedGraph& G);  // KruskalMST算法
+    vector<Edge>& mst();               // 返回Kruskal算法产生的最小生成树
+
 private:
-    int v_;         // 顶点
-    int w_;         // 另一个顶点
-    double weight_; // 边的权重
+    priority_queue<Edge, vector<Edge>, greater<Edge>> minHeap_;  // 用一个小顶堆来保存图中所有的边
+    vector<Edge> mst_;                                           // 保存最小生成树的数组
 };
 
-// 加权无向图的类
-class Graph {
-public:
-    Graph(int num_v);
-    ~Graph();
-    void addEdge(int v, int w, double weight); // 添加边
-    int V() const;                             // 返回图的结点数
-    vector<edge> edges() const;                // 返回图的所有边
-private:
-    int num_v_;         // 图的结点数
-    vector<edge> *adj_; // 图的邻接数组
-};
-
-Graph::Graph(int num_v) {
-    num_v_ = num_v;
-    adj_ = new vector<edge>[num_v_];
-}
-
-Graph::~Graph() {
-    delete []adj_;
-}
-
-void Graph::addEdge(int v, int w, double weight) {
-    adj_[v].push_back(edge(v, w, weight));
-    adj_[w].push_back(edge(w, v, weight));
-}
-
-int Graph::V() const {
-    return num_v_;
-}
-
-vector<edge> Graph::edges() const {
-    vector<edge> all_edges;
-    for (int i = 0; i < num_v_; i++) {  // 遍历每个顶点
-        for (edge e: adj_[i]) {         // 对每个顶点遍历每条边
-            if (e.v() < e.w()) {        // 取v < w的边，防止无向图的边被取两次
-                all_edges.push_back(e);
-            }
-        }
+KruskalMST::KruskalMST(EdgeWeightedGraph& G){
+    for(auto e: G.edges()){
+        minHeap_.push(e);  
     }
-    return all_edges;
-}
-
-/*
- * parament:
- *     G: 加权无向图
- *     mst：保存最小生成树的数组
- * return:
- *     bool: 是否存在最小生成树，true表示存在
- *     mst: 保存最小生成树的数组
- */
-bool kruskal(Graph G, vector<edge> &mst){
-    int n = G.V();
-    vector<edge> minheap(G.edges());  // 用一个小顶堆来保存图中所有的边
-    make_heap(minheap.begin(), minheap.end(), greater<double>());
-    unionFind uf(n);                  // 查并集类
-    while (!minheap.empty()) {        // 还存在边
-        // 取出权重最小的边
-        edge e = minheap.front();
-        pop_heap(minheap.begin(), minheap.end(), greater<double>()); minheap.pop_back();
+    unionFind uf(G.V());         // 查并集类
+    while (!minHeap_.empty()) {  // 还存在边
+        // 贪心法：取出权重最小的边
+        Edge e = minHeap_.top();
+        minHeap_.pop();
         // 若加入权重最小的边后生成树不会产生环，则将边加入到生成树中
         // 查找边的两个顶点的集合id
         //     若集合id相同，则向生成树中加入该边会形成环，不加入
@@ -95,16 +41,19 @@ bool kruskal(Graph G, vector<edge> &mst){
         int class_v = uf.find(e.v());
         int class_w = uf.find(e.w());
         if (class_v != class_w) {
-            mst.push_back(e);
+            mst_.push_back(e);
             uf.unite(class_v, class_w);
         }
     }
-    return mst.size() == (n - 1);
+}
+
+vector<Edge>& KruskalMST::mst(){
+    return mst_;
 }
 
 
 void testKruskal(){
-    Graph G(8);
+    EdgeWeightedGraph G(8);
     G.addEdge(4, 5, 0.35);
     G.addEdge(4, 7, 0.37);
     G.addEdge(5, 7, 0.28);
@@ -121,10 +70,11 @@ void testKruskal(){
     G.addEdge(3, 6, 0.52);
     G.addEdge(6, 0, 0.58);
     G.addEdge(6, 4, 0.93);
-    vector<edge> mst;
-    if(kruskal(G, mst)){ // 存在最小生成树
+    KruskalMST kruskal(G);
+    vector<Edge> mst = kruskal.mst();
+    if (!mst.empty()) {
         cout << "[Success]" << endl;
-        for (edge e: mst){
+        for (Edge e: mst){
             cout << "(" << e.v() << ", " << e.w() << ", " << e.weight() << ")" << endl;
         }
     } else {             // 不存在最小生成树

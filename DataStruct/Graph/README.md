@@ -35,7 +35,11 @@
 
 
 ### 4 加权无向图
-
+1. [邻接数组表示的加权有向图](./EdgeWeightedGraph.h)
+2. 加权无向图的应用
+ - [最小生成树（Prim算法）](../../Algorithms/graph/PrimMST.cpp)
+ - [最小生成树（Kruskal算法）](../../Algorithms/graph/KruskalMST.cpp)
+Prim算法和Kruskal算法不能应用于加权有向图，不可能。加权有向图的最小生成树是一个叫做最小树形图的问题。
 
 ### 5 加权有向图
 

@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Graph.h"
 #include "Digraph.h"
+#include "EdgeWeightedGraph.h"
 
 using namespace std;
 
@@ -96,7 +97,51 @@ void testDigraph(){
 }
 
 void testEdgeWeightedGraph(){
-
+    int numberOfV = 8;
+    EdgeWeightedGraph G(numberOfV);
+    G.addEdge(4, 5, 0.35);
+    G.addEdge(4, 7, 0.37);
+    G.addEdge(5, 7, 0.28);
+    G.addEdge(0, 7, 0.16);
+    G.addEdge(1, 5, 0.32);
+    G.addEdge(0, 4, 0.38);
+    G.addEdge(2, 3, 0.17);
+    G.addEdge(1, 7, 0.19);
+    G.addEdge(0, 2, 0.26);
+    G.addEdge(1, 2, 0.36);
+    G.addEdge(1, 3, 0.29);
+    G.addEdge(2, 7, 0.34);
+    G.addEdge(6, 2, 0.40);
+    G.addEdge(3, 6, 0.52);
+    G.addEdge(6, 0, 0.58);
+    G.addEdge(6, 4, 0.93);
+    G.output();
+    // test V E
+    cout << "number of v : " << G.V() << endl;
+    cout << "number of e : " << G.E() << endl;
+    // test exitsEdge delEdge
+    for (int i = 0; i <= 1; i++){
+        if (G.existsEdge(0, 7)) {
+            cout << "exits Edge (0, 7)" << endl;
+            cout << "delete Edge (0, 7)" << endl;
+            G.delEdge(0, 7);
+        } else {
+            cout << "Don't exits Edge (0, 7)" << endl;
+        }
+    }
+    // test adj
+    for (int i = 0; i < numberOfV; i++){
+        cout << i << ": ";
+        for (Edge e: G.adj(i)){
+            cout << "(" << e.v() << ", " << e.w() << ", " << e.weight() <<") ";
+        }
+        cout << endl;
+    }
+    // test Edges
+    vector<Edge> allEdges = G.edges();
+    for (int i = 0; i < allEdges.size(); i++){
+        cout << "Edge" << i << ": (" << allEdges[i].v() << ", " << allEdges[i].w() << ", " << allEdges[i].weight() << ")" << endl; 
+    }
 }
 
 void testEdgeWeightedDigraph(){
@@ -105,8 +150,8 @@ void testEdgeWeightedDigraph(){
 
 int main(){
     // testGraph();
-    testDigraph();
-    // testEdgeWeightedGraph();
+    // testDigraph();
+    testEdgeWeightedGraph();
     // testEdgeWeightedDigraph();
     return 0;
 }

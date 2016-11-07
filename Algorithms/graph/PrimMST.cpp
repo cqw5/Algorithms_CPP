@@ -1,109 +1,62 @@
-/*！
+/*! Author：qwchen
+ *! Date  : 2016-11-7
  * 加权无向图的最小生成树：Prim算法
  * 思路：一开始生成树只有一个顶点，然后向它添加V-1条边，每次总是将下一条连接树中的顶点与不在树中的顶点且权重最小的切分边加入树中。
  * 方法：用marked数组标记已经在树中的结点
  *       用数组mst存放生成树的边
- *       用小顶堆minheap保存候选的切分边
+ *       用小顶堆minheap保存候选的横切边
  */
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <queue>
+#include "../../DataStruct/Graph/EdgeWeightedGraph.h"
 
 using namespace std;
 
-// 加权无向边的类
-class edge{
+class PrimMST {
 public:
-    edge(){}
-    edge(int v, int w, double weight){ v_ = v; w_ = w; weight_ = weight; }
-    int v() const { return v_; }
-    int w() const { return w_; }
-    double weight() const { return weight_; }
-    operator double() const { return weight_; }
+    PrimMST(EdgeWeightedGraph& G);  // Prim算法
+    vector<Edge>& mst();            // 返回Prim算法生成的最小生成树
+
 private:
-    int v_;         // 顶点
-    int w_;         // 另一个顶点
-    double weight_; // 边的权重
+    vector<bool> marked_;                                        // 是否存在最小生成树，true表示存在
+    vector<Edge> mst_;                                           // 保存最小生成树的数组
+    priority_queue<Edge, vector<Edge>, greater<Edge>> minHeap_;  // 存放横切边
+    void visit(EdgeWeightedGraph& G, int v);                     // 标记顶点v并将所有连接v和未标记顶点的边加入minHeap_
 };
 
-// 加权无向图的类
-class Graph {
-public:
-    Graph(int num_v);
-    ~Graph();
-    void addEdge(int v, int w, double weight); // 添加边
-    int V() const;                             // 返回图的结点数
-    vector<edge> adj(int v) const;             // 返回顶点v的邻接边
-private:
-    int num_v_;         // 图的结点数
-    vector<edge> *adj_; // 图的邻接数组
-};
-
-Graph::Graph(int num_v) {
-    num_v_ = num_v;
-    adj_ = new vector<edge>[num_v_];
-}
-
-Graph::~Graph() {
-    delete []adj_;
-}
-
-void Graph::addEdge(int v, int w, double weight) {
-    adj_[v].push_back(edge(v, w, weight));
-    adj_[w].push_back(edge(w, v, weight));
-}
-
-int Graph::V() const {
-    return num_v_;
-}
-
-vector<edge> Graph::adj(int v) const{
-    return adj_[v];
-}
-
-// 标记顶点v并将所有连接v和未标记顶点的边加入小顶堆
-void visit(Graph G, vector<edge> &minheap, vector<bool> &marked, int v){
-    marked[v] = true;
-    for (edge e: G.adj(v)){
-        if (marked[e.v()] && marked[e.w()]) continue;
-        minheap.push_back(e); push_heap(minheap.begin(), minheap.end(), greater<double>());
-    }
-}
-
-/*
- * parament:
- *     G: 加权无向图
- *     mst：保存最小生成树的数组
- * return:
- *     bool: 是否存在最小生成树，true表示存在
- *     mst: 保存最小生成树的数组
- */
-bool prim(Graph G, vector<edge> &mst){
-    int n = G.V();
-    vector<bool> marked(n, false);  // 标记已经在树中的结点
-    vector<edge> minheap;           // 小顶堆，用来保存切分边
-    make_heap(minheap.begin(), minheap.end(), greater<double>());
-    visit(G, minheap, marked, 0);
-    while(!minheap.empty()) {       // 还存在边
-        // 取出权重最小的边
-        edge e = minheap.front();
-        pop_heap(minheap.begin(), minheap.end(), greater<double>()); minheap.pop_back();
+PrimMST::PrimMST(EdgeWeightedGraph& G){
+    marked_.assign(G.V(), false);
+    visit(G, 0);
+    while(!minHeap_.empty()){
+        Edge e = minHeap_.top(); // 取出权重最小的边
+        minHeap_.pop();
         int v = e.v();
         int w = e.w();
-        // 若边的两个端点都在生成树中，则该边无效，否则将该边放到最小生成树中
-        if (marked[v] && marked[w]) continue;
-        mst.push_back(e);
-        if (!marked[v]) visit(G, minheap, marked, v);
-        if (!marked[w]) visit(G, minheap, marked, w);
+        if (marked_[v] && marked_[w]) continue; // 若边的两个端点都在生成树中，则该边无效，否则将该边放到最小生成树中
+        mst_.push_back(e); // 将边加入到生成树中
+        if (!marked_[v]) visit(G, v);
+        if (!marked_[w]) visit(G, w);
     }
-    return mst.size() == (n - 1);
 }
 
+void PrimMST::visit(EdgeWeightedGraph& G, int v){
+    marked_[v] = true;       // 标记顶点v
+    for(Edge e: G.adj(v)){   // 将所有连接v并且未被标记的边加入minHeap_
+        if(!marked_[e.w()]) {
+            minHeap_.push(e);
+        }
+    }
+}
+
+vector<Edge>& PrimMST::mst(){
+    return mst_;
+}
 
 
 void testPrim(){
-    Graph G(8);
+    EdgeWeightedGraph G(8);
     G.addEdge(4, 5, 0.35);
     G.addEdge(4, 7, 0.37);
     G.addEdge(5, 7, 0.28);
@@ -120,10 +73,11 @@ void testPrim(){
     G.addEdge(3, 6, 0.52);
     G.addEdge(6, 0, 0.58);
     G.addEdge(6, 4, 0.93);
-    vector<edge> mst;
-    if(prim(G, mst)){ // 存在最小生成树
+    PrimMST prim(G);
+    vector<Edge> mst = prim.mst();
+    if (!mst.empty()) {
         cout << "[Success]" << endl;
-        for (edge e: mst){
+        for (Edge e: mst){
             cout << "(" << e.v() << ", " << e.w() << ", " << e.weight() << ")" << endl;
         }
     } else {             // 不存在最小生成树
