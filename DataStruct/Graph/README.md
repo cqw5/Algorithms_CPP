@@ -30,7 +30,7 @@
  - 单点最短路径（与无向图的[单点最短路径](../../Algorithms/graph/BreadthFirstPaths.cpp)问题相似，参考该问题）
  - [有向环检测](../../Algorithms/graph/DirectedCycle.cpp) (深度优先搜索)
  - [深度优先的顶点排序](../../Algorithms/graph/DepthFirstOrder.cpp) （深度优先搜索）
- - [优先级限制下的调度问题（及 拓扑排序）](../../Algorithms/graph/TopologicalOrder.cpp) （贪心算法）
+ - [优先级限制下的调度问题（及 拓扑排序）](../../Algorithms/graph/topologicalOrder.cpp) （贪心算法）
  - [强连通性 Kosaraju算法](../../Algorithms/graph/Kosaraju.cpp) （深度优先搜索）
 
 
