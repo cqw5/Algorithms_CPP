@@ -1,10 +1,11 @@
-/*!
+/*! Author: qwchen
+ *! Data: 2016-10-17
  * 组合公式：C(n,r):从n个数中取r个数的组合。如对于n=4个数{1,2,3,4}，r=2，则打印：{1,2} {1,3} {1,4} {2,3} {2,4} {3,4}。
  * 根据组合数的递归关系：C(n,r) = C(n-1,r-1) + C(n-1,r)，下面利用递归来求解该问题
  */
 
-# include <iostream>
-# include <vector>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
