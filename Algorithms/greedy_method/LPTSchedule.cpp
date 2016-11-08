@@ -1,8 +1,11 @@
-/*！
+/*! Author: qwchen
+ *! Date  : 2016-10-17
+ * 
  * 机器调度问题：
  * 一个工厂有m台一模一样的机器，有n个任务要处理。
  * * 一台机器在同一个时间内只能处理一个作业
  * * 一个作业不能同时在两台机器上处理
+ * * 执行每个任务所需要的时间不同（即每个任务都有一个属性：时间）
  * 求最少的调度时间？
  * 这是一个NPC问题，采用近似算法来解决。
  * 思路：采用LPT算法，将作业按处理时间递减顺序排序。当一个作业需要分配时，总是分配给最先变为空闲的机器。
@@ -14,6 +17,7 @@
 
 using namespace std;
 
+// 任务结点(任务的ID + 执行任务所需要的时间)
 class jobNode {
 public:
     jobNode(){}
@@ -35,6 +39,7 @@ private:
         time_;  // 执行任务所需要的时间
 };
 
+// 机器结点(机器ID + 当前机器开始空闲的时间)
 class machineNode {
 public:
 	machineNode(){}
@@ -59,6 +64,14 @@ private:
         avail_;   // 当前机器开始的空闲时间
 };
 
+/*
+ * 机器调度的贪心算法
+ * Parament:
+ *     job: vector<jobNode>, 任务结点集合
+ *     machine: vector<machine>, 机器结点集合
+ *     num_job: int, 任务结点数
+ *     num_machine: 机器结点数
+ */
 void makeSchedule(vector<jobNode> job, vector<machineNode> machine, int num_job, int num_machine){
     // 如果机器数大于等于任务数，直接分配即可
     if (num_machine >= num_job){
