@@ -39,13 +39,19 @@
 2. 加权无向图的应用
  - [最小生成树（Prim算法）](../../Algorithms/graph/PrimMST.cpp) 时间复杂度O(ElogE)，空间复杂度O(V)
  - [最小生成树（Kruskal算法）](../../Algorithms/graph/KruskalMST.cpp) 时间复杂度O(ElogE)，空间复杂度O(E)
-Prim算法和Kruskal算法不能应用于加权有向图，不可能。加权有向图的最小生成树是一个叫做最小树形图的问题。
+<br />Prim算法和Kruskal算法不能应用于加权有向图，不可能。加权有向图的最小生成树是一个叫做最小树形图的问题。
 
 ### 5 加权有向图
 1. [邻接数组表示的加权有向图](./EdgeWeightedDigraph.h)
 2. 加权有向图的应用
  - [最短路径（Dijkstra算法）](../../Algorithms/graph/Dijkstra.cpp)
+     - 解决边权重非负的最短路径问题
+     - 贪心算法
+     - 一般情况下时间复杂度O(ElogV)，最坏情况下时间复杂度也是O(ElogV)
  - [最短路径（Bellman-Ford算法）](../../Algorithms/graph/Bellman_Ford.cpp)
+     - 跟一般的最短路基算法，其图可以含有环，边的权重也可以是负值，但是不能存在负权重环
+     - 动态规划算法
+     - 一般情况下时间复杂度O(E+V)，最坏情况下时间复杂度是O(VE)
 
 
 

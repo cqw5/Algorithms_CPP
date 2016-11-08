@@ -1,5 +1,5 @@
 /*！Author: qwchen
- *! Date: 2016-10-27
+ *! Date: 2016-11-8
  * 加权有向图(权重非负)的最短路径：Dijkstra算法
  * 思想：构造edgeTo[v](s到v的最短路径上的最后一条边) 和 distTo[v](s到v的已知的最短路径的长度)，
  *       之后判断是否有最短路径、最短路径长度、最短路径，都可以从edgeTo[]和distTo[]得出
@@ -16,46 +16,9 @@
 #include <algorithm>
 #include <float.h>
 #include <stack>
+#include "../../DataStruct/Graph/EdgeWeightedDigraph.h"
 
 using namespace std;
-
-// 加权有向边
-class DirectEdge {
-public:
-    DirectEdge() {}
-    DirectEdge(int v, int w, double weight) { v_ = v; w_ = w; weight_ = weight; }
-    int from() { return v_; }            // 返回指出这条边的结点
-    int to() { return w_; }              // 返回这条边指向的结点
-    double weight() { return weight_; }  // 返回边的权重
-private:
-    int v_;          // 指出这条边的结点
-    int w_;          // 这条边指向的结点
-    double weight_;  // 边的权重
-};
-
-// 加权有向图
-class EdgeWeightedDigraph {
-public:
-    EdgeWeightedDigraph(int num_v) {             // 构造函数
-        num_v_ = num_v;
-        adj_ = new vector<DirectEdge>[num_v_];
-    }
-    ~EdgeWeightedDigraph() {                     // 析构函数
-        delete[]adj_;
-    }
-    void addEdge(int v, int w, double weight) {  // 增加有向边
-        adj_[v].push_back(DirectEdge(v, w, weight));
-    }
-    int V() const {                              // 返回图中顶点个数
-        return num_v_;
-    }
-    vector<DirectEdge> adj(int v) const {        // 返回顶点v的邻接数组
-        return adj_[v];
-    }
-private:
-    int num_v_;                                  // 图中顶点个数
-    vector<DirectEdge> *adj_;                    // 图的邻接数组
-};
 
 // 定义最小堆中存储的的结点
 class vectexInHeap {
@@ -78,10 +41,10 @@ public:
     DijstraShortPath(EdgeWeightedDigraph &G, int s);
     double distTo(int v);              // 从顶点s到v的距离
     bool hasPathTo(int v);             // 是否存在从顶点s到v的路径
-    stack<DirectEdge> pathTo(int v);   // 从顶点s到v的路径
+    stack<DirectedEdge> pathTo(int v);   // 从顶点s到v的路径
 private:
     void relax(EdgeWeightedDigraph &G, int v);  // 放松结点v
-    vector<DirectEdge> edgeTo_;                // edgeTo[v]的值为s到v的最短路径上的最后一条边
+    vector<DirectedEdge> edgeTo_;                // edgeTo[v]的值为s到v的最短路径上的最后一条边
     vector<double> distTo_;                    // distTo[v]的值为s到v的已知的最短路径的长度
     vector<vectexInHeap> minheap_;             // 小顶堆保存候选的待放松的结点
     int s_;                                    // 起始结点
@@ -104,7 +67,7 @@ DijstraShortPath::DijstraShortPath(EdgeWeightedDigraph &G, int s) {
     s_ = s;
     int n = G.V();
     // 初始化edgeTo
-    vector<DirectEdge> tmp_edgeTo(n);
+    vector<DirectedEdge> tmp_edgeTo(n);
     edgeTo_ = tmp_edgeTo;
     // 初始化distTo
     vector<double> tmp_distTo(n, DBL_MAX);
@@ -129,7 +92,7 @@ DijstraShortPath::DijstraShortPath(EdgeWeightedDigraph &G, int s) {
  *     v：待发送的顶点
  */
 void DijstraShortPath::relax(EdgeWeightedDigraph &G, int v) {
-    for (DirectEdge e : G.adj(v)) {
+    for (DirectedEdge e : G.adj(v)) {
         int w = e.to();  // 从放松的结点指出的有向边指向的结点
         if (distTo_[w] > distTo_[v] + e.weight()) {
             double old_distTo_w = distTo_[w];
@@ -154,9 +117,9 @@ bool DijstraShortPath::hasPathTo(int v) {
     return distTo_[v] != DBL_MAX;
 }
 
-stack<DirectEdge> DijstraShortPath::pathTo(int v) {
-    stack<DirectEdge> path;
-    DirectEdge e = edgeTo_[v];
+stack<DirectedEdge> DijstraShortPath::pathTo(int v) {
+    stack<DirectedEdge> path;
+    DirectedEdge e = edgeTo_[v];
     for (; e.from() != s_; e = edgeTo_[e.from()]) {
         path.push(e);
     }
@@ -182,14 +145,20 @@ void testDijstraShortPath() {
     G.addEdge(6, 0, 0.58);
     G.addEdge(6, 4, 0.93);
     DijstraShortPath SP(G, 0);
-    cout << SP.hasPathTo(6) << endl;
-    cout << SP.distTo(6) << endl;
-    stack<DirectEdge> stack_edge = SP.pathTo(6);
+    if (SP.hasPathTo(6)){
+        cout << "0 has path to 6" << endl;
+        cout << "Dist from 0 to 6 : " <<SP.distTo(6) << endl;
+    } else {
+        cout << "0 no path to 6" << endl;
+    }
+    cout << "Path from 0 to 6 : ";
+    stack<DirectedEdge> stack_edge = SP.pathTo(6);
     while(!stack_edge.empty()) {
-        DirectEdge e = stack_edge.top();
+        DirectedEdge e = stack_edge.top();
         stack_edge.pop();
         cout << e.from() << " ";
     }
+    cout << "6" << endl;
 }
 
 int main(){
