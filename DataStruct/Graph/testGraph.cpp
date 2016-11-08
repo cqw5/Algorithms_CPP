@@ -1,6 +1,6 @@
 /*! Author：qwchen
- *! Date  : 2016-11-6
- * 测试无向图
+ *! Date  : 2016-11-8
+ * 测试无向图、有向图、加权无向图、加权有向图
  */
 
 #include <iostream>
@@ -193,9 +193,9 @@ void testEdgeWeightedDigraph(){
 }
 
 int main(){
-    // testGraph();
-    // testDigraph();
-    // testEdgeWeightedGraph();
+    testGraph();
+    testDigraph();
+    testEdgeWeightedGraph();
     testEdgeWeightedDigraph();
     return 0;
 }
