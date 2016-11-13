@@ -3,6 +3,7 @@
  - [线性表](./DataStruct/List/README.md)
  - [栈](./DataStruct/Stack/README.md)
  - [队列](./DataStruct/Queue/README.md)
+ - [并查集](./DataStruct/UnionFind/README.md)
  - [字典](./DataStruct/Dict/README.md)
  - [堆](./DataStruct/Heap/README.md)
  - [树](./DataStruct/Tree/README.md)

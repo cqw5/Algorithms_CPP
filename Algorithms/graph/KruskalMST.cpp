@@ -10,7 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include "../search/unionFind.h"
+#include "../../DataStruct/UnionFind/unionFind.h"
 #include "../../DataStruct/Graph/EdgeWeightedGraph.h"
 
 using namespace std;
