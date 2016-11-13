@@ -15,6 +15,7 @@
 #include "mergeSortRecursion.h"
 #include "mergeSortIteration.h"
 #include "quickSort.h"
+#include "quickSortByStack.h"
 #include "quickSort3Way.h"
 #include "heapSort.h"
 #include "binSort.h"
@@ -78,6 +79,7 @@ void compareByTime(int n, int range){
     printTime(MergeSortRecursion<int>::mergeSort, "MergeSortRecursion", a);     // 归并排序(递归)
     printTime(MergeSortIteration<int>::mergeSort, "MergeSortIteration", a);     // 归并排序(迭代)
     printTime(QuickSort<int>::quickSort, "QuickSort", a);                       // 快速排序
+    printTime(QuickSortByStack<int>::quickSort, "QuickSortByStack", a);         // 快速排序(非递归)
     printTime(QuickSort3Way<int>::quickSort, "QuickSort3Way", a);               // 三向切分快速排序
     printTime(HeapSort<int>::heapSort, "HeapSort", a);                          // 堆排序
     printTimeBin(BinSort<int>::binSort, "BinSort", a, range);                   // 箱子排序
@@ -114,6 +116,7 @@ void testSort(int n, int range){
     printSorted(MergeSortRecursion<int>::mergeSort, "MergeSortRecursion", a);     // 归并排序(递归)
     printSorted(MergeSortIteration<int>::mergeSort, "MergeSortIteration", a);     // 归并排序(迭代)
     printSorted(QuickSort<int>::quickSort, "QuickSort", a);                       // 快速排序
+    printSorted(QuickSortByStack<int>::quickSort, "QuickSortByStack", a);         // 快速排序(非递归)
     printSorted(QuickSort3Way<int>::quickSort, "QuickSort3Way", a);               // 三向切分快速排序
     printSorted(HeapSort<int>::heapSort, "HeapSort", a);                          // 堆排序
 }
