@@ -6,10 +6,8 @@
  *     若查找时失败，返回-1
  */
 
-#ifndef binarySearch_
-#define binarySearch_
-
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -22,8 +20,8 @@ using namespace std;
  *     待查找元素的下标，不存在时返回-1
  */
 template <class T>
-int binarySearch(T *a, int n, const T &x) {
-    int low = 0, high = n - 1;
+int binarySearch(vector<T>& a, const T x) {
+    int low = 0, high = a.size() - 1;
     int mid = 0;
     while (low <= high) {
         mid = (low + high) / 2;
@@ -34,4 +32,13 @@ int binarySearch(T *a, int n, const T &x) {
     return -1;
 }
 
-#endif
+void testSearch(){
+    vector<int> a = {0,1,2,3,4,5,6,7,8,9,10};
+    cout << binarySearch(a, 6) << endl;
+}
+
+int main(){
+    testSearch();
+    return 0;
+}
+
