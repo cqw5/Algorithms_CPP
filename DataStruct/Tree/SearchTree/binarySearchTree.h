@@ -1,6 +1,6 @@
 /*! Author: qwchen
  *! Date: 2016-10-10
- * ¶þ²æËÑË÷Ê÷£¬¼Ì³Ð¶þ²æÊ÷
+ * ¶þ²æËÑË÷Ê÷
  */
 
 #ifndef binarySearchTree_

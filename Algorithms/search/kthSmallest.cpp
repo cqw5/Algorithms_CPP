@@ -1,5 +1,6 @@
-/*! Author: qwchen
- *! Date: 2016-11-15
+/*! Source: https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/
+ *! Author: qwchen
+ *! Date  : 2016-11-15
  * 从排序矩阵中查找从小到大的第k个数。
  * 排序矩阵定义为：每一行递增，每一列也递增。
  * 思想：二分查找。
@@ -68,5 +69,6 @@ void testSearch(){
 
 int main(){
     testSearch();
+    return 0;
 }
 
