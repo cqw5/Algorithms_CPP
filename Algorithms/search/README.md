@@ -11,4 +11,5 @@
  - 根据下标找到值为val的元素的下标<br />
    [从有序数组中查找元素val的下标](binarySearch.cpp)
  - 根据值找到第k个元素的值<br />
-   [排序矩阵中从小到大第k个元素](kthSmallest.cpp)
+   [从未排序的数组中查找第k小的元素](kthSmallestOfArray.cpp)：数组元素可能有重复，也可能没有。
+   [排序矩阵中从小到大第k个元素](kthSmallestOfMatrix.cpp)
