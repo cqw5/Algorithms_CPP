@@ -15,8 +15,8 @@
  - 根据下标找到值为val的元素的下标<br />
    - [从有序数组中查找元素val的下标](binarySearch.cpp)
    - [从无重复元素有序数组中查找小于等于val的元素中的最大值的下标](searchInsert.cpp)：即数组中存在val时，返回val的下标；不存在val时，返回val的插入位置
-   - [从有重复元素有序数组中找到第一个等于val的元素的下标](searchRange.cpp)
-   - [从有重复元素有序数组中找到最后一个等于val的元素的下标](searchRange.cpp)
+   - [从有重复元素有序数组中找到第一个等于val的元素的下标](searchRange.cpp#L19)
+   - [从有重复元素有序数组中找到最后一个等于val的元素的下标](searchRange.cpp#L42)
  - 根据值找到第k个元素的值<br />
    - [从未排序的数组中查找第k小的元素](kthSmallestOfArray.cpp)：数组元素可能有重复，也可能没有。
    - [排序矩阵中从小到大第k个元素](kthSmallestOfMatrix.cpp)
