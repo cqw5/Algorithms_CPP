@@ -7,9 +7,16 @@
 
 
 ### 2 二分查找
-二分查找的前提是序列本身已经排好序。
+二分查找的前提是序列本身已经排好序。<br />用一个low指针指向第一个元素，high指针指向最后一个元素<br />当low<=high时执行循环，跳出循环有两种可能：<br />
+- 找到要查找的元素，提前跳出。
+- low>high，此时数组中不存在待查找的元素，而high指向所有小于待查找元素中最大的元素，low指向所有大于待查找元素中最小的元素。    
+
+##### 二分查找的例子：
  - 根据下标找到值为val的元素的下标<br />
-   [从有序数组中查找元素val的下标](binarySearch.cpp)
+   - [从有序数组中查找元素val的下标](binarySearch.cpp)
+   - [从无重复元素有序数组中查找小于等于val的元素中的最大值的下标](searchInsert.cpp)：即数组中存在val时，返回val的下标；不存在val时，返回val的插入位置
+   - [从有重复元素有序数组中找到第一个等于val的元素的下标](searchFirst.cpp)
+   - [从有重复元素有序数组中找到最后一个等于val的元素的下标](searchLast.cpp)
  - 根据值找到第k个元素的值<br />
-   [从未排序的数组中查找第k小的元素](kthSmallestOfArray.cpp)：数组元素可能有重复，也可能没有。
-   [排序矩阵中从小到大第k个元素](kthSmallestOfMatrix.cpp)
+   - [从未排序的数组中查找第k小的元素](kthSmallestOfArray.cpp)：数组元素可能有重复，也可能没有。
+   - [排序矩阵中从小到大第k个元素](kthSmallestOfMatrix.cpp)
