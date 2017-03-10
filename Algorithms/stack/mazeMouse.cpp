@@ -1,5 +1,6 @@
 /*! Author: qwchen
- *! Date: 2016-9-20
+ *! Date: 2016-9-20 非递归版本
+ *! Date: 2017-3-06 递归版本
  * 用栈实现的迷宫老鼠问题
  * 问题描述：给定一个迷宫，将一老鼠放在迷宫的入口，让老鼠寻找一条从迷宫入口到迷宫出口的路径
  * 思路：用一个栈来保存从入口到当前位置的路径，用一个长度为4的数组保存右下左上的顺时针操作移动顺序
@@ -85,6 +86,33 @@ bool findPath(vector<vector<bool>> maze, position start, position end, stack<pos
     return true;
 }
 
+
+/* 
+ * 思路：
+ *   用递归，让题目变得非常简单
+ */
+bool findPathRecur(vector<vector<bool>>& maze, int rows, int cols, int i, int j, stack<position> &path) {
+    // 将当前节点入栈，并标记为1
+    position cur(i, j);
+    path.push(cur);
+    maze[i][j] = 1;
+    if (i == rows && j == cols) { // 如果当前节点是出口，说明找到了，返回true
+        return true;
+    }
+    // 顺时针方向（右，下，左，上）寻找出口，如果右一个能找到，返回true
+    if (maze[i][j+1] == 0 && findPathRecur(maze, rows, cols, i, j+1, path)    // 右
+     || maze[i+1][j] == 0 && findPathRecur(maze, rows, cols, i+1, j, path)    // 下
+     || maze[i][j-1] == 0 && findPathRecur(maze, rows, cols, i, j-1, path)    // 左
+     || maze[i-1][j] == 0 && findPathRecur(maze, rows, cols, i-1, j, path)) { // 上
+        return true;
+    }
+    // 从当前节点出发，顺时针方向（右，下，左，上）都找不到出口，将当前节点出栈，标记重新置为0，返回false
+    path.pop();
+    // maze[i][j] = 0;  // 关键，并不需要将maze[i][j]重新标记为0，前面的dfs从这个节点走不通，后面的从这个节点也肯定走不通
+    return false;
+}
+
+
 /*
  * 输出路径
  */
@@ -122,12 +150,22 @@ void testMazeMouse() {
         { 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
+    // 非递归版本（栈）
     position start(1, 1); // maze[1][1]是迷宫的入口
     position end(10, 10); // maze[10][10]是迷宫的出口
-    stack<position> path; // 用栈保存从迷宫入口到当前位置经过的路径
-    if (findPath(maze, start, end, path)){
+    stack<position> path1; // 用栈保存从迷宫入口到当前位置经过的路径
+    if (findPath(maze, start, end, path1)){
         cout << "Have Path" << endl;
-        outpath(path);
+        outpath(path1);
+    }
+    else {
+        cout << "No Path" << endl;
+    }
+    // 递归版本
+    stack<position> path2; // 用栈保存从迷宫入口到当前位置经过的路径
+    if (findPathRecur(maze, 10, 10, 1, 1, path2)) {
+        cout << "Have Path" << endl;
+        outpath(path2);
     }
     else {
         cout << "No Path" << endl;
@@ -137,3 +175,4 @@ void testMazeMouse() {
 int main(){
     testMazeMouse();
 }
+
